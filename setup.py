@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-from setuptools import find_packages
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='flowy',
-    version='0.3.2',
+    version='0.3.3',
     description="Python library for Amazon Simple Workflow Service",
     long_description=open('README.rst').read(),
     keywords='AWS SWF workflow',

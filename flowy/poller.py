@@ -1,9 +1,8 @@
 import logging
 
 from boto.swf.exceptions import SWFResponseError
+from flowy.spec import SWFSpecKey, SWFWorkflowSpec
 
-from flowy.spec import SWFSpecKey
-from flowy.spec import SWFWorkflowSpec
 
 logger = logging.getLogger(__name__)
 

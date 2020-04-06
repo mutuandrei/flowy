@@ -38,3 +38,7 @@ docs/_build/
 
 # virtualfish connect
 .venv
+
+# idle
+.idea
+.vscode
