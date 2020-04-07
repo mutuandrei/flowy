@@ -38,3 +38,5 @@ docs/_build/
 
 # virtualfish connect
 .venv
+
+.idea
