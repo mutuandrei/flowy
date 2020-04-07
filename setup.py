@@ -16,7 +16,11 @@ setup(
     include_package_data=True,
     zip_safe=False,
     setup_requires=['nose', 'setuptools_git', 'wheel'],
-    install_requires=['boto==2.33.0', 'venusian>=1.0a8', 'boto3=>1.12.37'],
+    install_requires=[
+        'boto==2.33.0',
+        'venusian>=1.0a8',
+        'boto3>=1.12.37'
+    ],
     tests_require=['coverage'],
     test_suite="nose.collector",
     extras_require={'docs': ['sphinx', 'sphinx_rtd_theme']},
