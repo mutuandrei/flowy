@@ -1,16 +1,18 @@
 import logging
 
 from boto.swf.exceptions import SWFResponseError
-from flowy.spec import SWFSpecKey, SWFWorkflowSpec
 
+from flowy.spec import SWFSpecKey, SWFWorkflowSpec
 
 logger = logging.getLogger(__name__)
 
 
 class SWFActivityPoller(object):
-    def __init__(self, swf_client, task_list, task_factory):
-        self._swf_client = swf_client
+    def __init__(self, domain, task_list, swf_client, identity, task_factory):
+        self._domain = domain
+        self._identity = identity
         self._task_list = task_list
+        self._swf_client = swf_client
         self._task_factory = task_factory
 
     def poll_next_task(self):
@@ -36,19 +38,19 @@ class SWFActivityPoller(object):
     def _poll_response(self):
         swf_response = {}
         while 'taskToken' not in swf_response or not swf_response['taskToken']:
-            try:
-                swf_response = self._swf_client.poll_for_activity_task(
-                    task_list=self._task_list
-                )
-            except SWFResponseError:
-                # add a delay before retrying?
-                logger.exception('Error while polling for activities:')
+            swf_response = self._swf_client.poll_for_activity_task(
+                domain=self._domain,
+                taskList={
+                    "name": self._task_list
+                },
+                identity=self._identity
+            )
+
         return swf_response
 
 
 class SWFWorkflowPoller(object):
-    def __init__(self, swf_client, task_list, task_factory,
-                 spec_factory=SWFWorkflowSpec):
+    def __init__(self, swf_client, task_list, task_factory, spec_factory=SWFWorkflowSpec):
         self._swf_client = swf_client
         self._task_list = task_list
         self._task_factory = task_factory
